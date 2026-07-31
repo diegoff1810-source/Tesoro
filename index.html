@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Búsqueda del Tesoro</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Metamorphous&family=Pinyon+Script&display=swap');
+
+    :root {
+      --pirate-gold: #e5c158;
+      --old-paper: #e7d2b2;
+      --paper-dark: #cdb085;
+      --leather: #2b1a0e;
+      --crimson: #a81c1c;
+      --ink: #2b1e16;
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+      text-transform: none !important; /* Desactiva cualquier forzado a mayúsculas */
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Cinzel', serif;
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* Fondo de playa pirata/costera */
+      background: linear-gradient(rgba(10, 25, 35, 0.55), rgba(5, 12, 18, 0.75)),
+                  url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      overflow-x: hidden;
+    }
+
+    /* Reproductor de Audio Oculto / Controles */
+    #audio-control {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      z-index: 100;
+      background: rgba(31, 24, 17, 0.9);
+      border: 2px solid var(--pirate-gold);
+      color: var(--pirate-gold);
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+
+    /* Pergamino Principal con Geometría Irregular y Arrugada */
+    .map-scroll {
+      position: relative;
+      width: 92%;
+      max-width: 680px;
+      background: var(--old-paper);
+      padding: 45px 35px;
+      text-align: center;
+      /* Formato irregular para simular mapa desgarrado/arrugado */
+      clip-path: polygon(
+        0% 2%, 3% 0%, 97% 1%, 100% 3%, 
+        98% 35%, 100% 70%, 97% 98%, 95% 100%, 
+        3% 99%, 0% 96%, 2% 65%, 0% 30%
+      );
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+      filter: drop-shadow(0px 15px 12px rgba(0,0,0,0.7));
+    }
+
+    /* Capa interna para bordes y pliegues del mapa */
+    .map-scroll::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.2) 0%, transparent 60%),
+                  radial-gradient(circle, transparent 50%, rgba(85, 53, 23, 0.45) 100%),
+                  repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 2px, transparent 2px, transparent 4px);
+      border: 3px solid rgba(92, 55, 29, 0.4);
+      pointer-events: none;
+    }
+
+    h1 {
+      font-family: 'Metamorphous', cursive;
+      font-size: 1.8rem;
+      color: var(--crimson);
+      margin: 0 0 8px 0;
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 0px rgba(255,255,255,0.4);
+    }
+
+    .subtitle {
+      font-style: italic;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      color: #4a3828;
+    }
+
+    /* Panel Superior: Vidas + Temporizador */
+    .top-status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(61, 35, 18, 0.12);
+      padding: 10px 20px;
+      border-radius: 6px;
+      border: 1px solid rgba(138, 93, 49, 0.3);
+      margin-bottom: 25px;
+    }
+
+    .lives-container {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    /* Estilo de Corazones para Vidas */
+    .heart-icon {
+      width: 22px;
+      height: 22px;
+      fill: var(--crimson);
+      transition: all 0.4s ease;
+      filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.3));
+    }
+
+    .heart-icon.lost {
+      fill: #888888;
+      opacity: 0.25;
+      transform: scale(0.7) rotate(-15deg);
+    }
+
+    .timer-display {
+      font-family: 'Metamorphous', cursive;
+      font-size: 1rem;
+      color: var(--crimson);
+      font-weight: bold;
+      visibility: hidden;
+    }
+
+    .timer-display.active {
+      visibility: visible;
+    }
+
+    /* Tarjeta de Pregunta */
+    .question-card {
+      background: rgba(255, 255, 255, 0.45);
+      border: 2px dashed rgba(168, 28, 28, 0.4);
+      padding: 22px 18px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .question-text {
+      font-size: 1.05rem;
+      font-weight: bold;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+
+    /* Opciones de Respuesta */
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn-option {
+      background: linear-gradient(180deg, #5c3a21 0%, #3a2211 100%);
+      color: var(--old-paper);
+      border: 1px solid var(--pirate-gold);
+      padding: 13px 18px;
+      border-radius: 6px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .btn-option:hover {
+      background: linear-gradient(180deg, #822222 0%, #521212 100%);
+      border-color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* Banner Intermedio */
+    #midpoint-banner {
+      display: none;
+      background: var(--leather);
+      color: var(--pirate-gold);
+      padding: 25px 20px;
+      border-radius: 8px;
+      border: 2px solid var(--pirate-gold);
+      margin-bottom: 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    #midpoint-banner h3 {
+      font-size: 1.25rem;
+      margin-top: 0;
+      color: var(--pirate-gold);
+    }
+
+    #midpoint-banner p {
+      color: #e2c9a1;
+      line-height: 1.5;
+    }
+
+    /* Pantallas Finales */
+    #final-screen, #gameover-screen {
+      display: none;
+      animation: fadeIn 0.6s ease;
+    }
+
+    .reward-scroll {
+      background: rgba(255, 255, 255, 0.65);
+      border: 2px solid var(--crimson);
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 15px;
+    }
+
+    .btn-action {
+      background: var(--crimson);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+
+    .btn-action:hover {
+      background: #d32f2f;
+    }
+
+    /* Animación al equivocarse (Shake) */
+    .shake {
+      animation: shakeAnim 0.4s ease-in-out;
+    }
+
+    @keyframes shakeAnim {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-12px); }
+      40%, 80% { transform: translateX(12px); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Música de fondo (cancion.mp3 en la misma carpeta) -->
+  <audio id="bg-music" loop>
+    <source src="cancion.mp3" type="audio/mpeg">
+  </audio>
+
+  <button id="audio-control" onclick="toggleAudio()">Música: ON/OFF</button>
+
+  <div class="map-scroll" id="main-container">
+    <h1>La Búsqueda del Tesoro</h1>
+    <p class="subtitle" id="sub-title">Responde correctamente para avanzar en la travesía...</p>
+
+    <!-- Barra Superior con Corazones -->
+    <div class="top-status-bar" id="status-bar">
+      <div class="lives-container">
+        <span>Vidas:</span>
+        <svg class="heart-icon" id="life-1" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <svg class="heart-icon" id="life-2" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <svg class="heart-icon" id="life-3" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+      </div>
+      <div class="timer-display" id="timer-display">Tiempo: <span id="timer-count">20</span>s</div>
+    </div>
+
+    <!-- Banner Mitad del Camino -->
+    <div id="midpoint-banner">
+      <h3>Llegaste a la mitad del camino pirata</h3>
+      <p>Ahora serán preguntas personales acerca de Diego. Tienes un máximo de 20 segundos por respuesta.</p>
+      <button class="btn-action" onclick="startSecondHalf()">Continuar travesía</button>
+    </div>
+
+    <!-- Juego Activo -->
+    <div id="quiz-box">
+      <div class="question-card">
+        <div class="question-text" id="question-text">Cargando...</div>
+      </div>
+      <div class="options-grid" id="options-grid"></div>
+    </div>
+
+    <!-- Pantalla Victoria -->
+    <div id="final-screen">
+      <h2>¡Has completado el mapa del tesoro!</h2>
+      <p>Demostraste conocer cada paso de esta gran historia.</p>
+      <div class="reward-scroll">
+        <h3>Recompensa final</h3>
+        <p>Vale por una cita especial y un cofre de momentos por seguir construyendo juntos.</p>
+      </div>
+    </div>
+
+    <!-- Pantalla Game Over -->
+    <div id="gameover-screen">
+      <h2>Has quedado a la deriva...</h2>
+      <p>Te has quedado sin vidas en el mar tempestuoso.</p>
+      <button class="btn-action" onclick="restartGame()">Reintentar la búsqueda</button>
+    </div>
+  </div>
+
+<script>
+  // Banco de Preguntas en formato mixto estándar
+  const questions = [
+    // --- PRIMERA MITAD: Nuestra Historia ---
+    {
+      q: "1.- ¿Cuál fue mi primer regalo?",
+      options: ["Flores", "Soporte de martillo", "Audífonos", "Concierto de MCR"],
+      correct: 1
+    },
+    {
+      q: "2.- ¿Cuáles fueron las primeras flores?",
+      options: ["Orquídea blanca", "Girasol", "Anturio rojo", "Lirio rosado"],
+      correct: 0
+    },
+    {
+      q: "3.- ¿Cuál fue nuestra segunda comida juntos?",
+      options: ["Tacos al pastor", "Comida yucateca", "Tortas", "Hamburguesas"],
+      correct: 3
+    },
+    {
+      q: "4.- ¿Con qué canción me viste llorar por primera vez?",
+      options: ["We are all alone", "Eyes without a face"],
+      correct: 1
+    },
+    {
+      q: "5.- ¿Cuál Dínamo visitamos en nuestro primer hike?",
+      options: ["Puerta 1", "Puerta 3", "Puerta 4", "Nuestro primer hike no fue en los Dínamos"],
+      correct: 3
+    },
+    // --- SEGUNDA MITAD: Preguntas Personales sobre Diego (con temporizador) ---
+    {
+      q: "6.- ¿Cuál es mi comida favorita?",
+      options: ["Pollo almendrado Log Yin", "Hamburguesas Rubens", "Chicken Bake Costco", "Lasaña Armandos"],
+      correct: 0
+    },
+    {
+      q: "7.- ¿Cuál es mi videojuego favorito?",
+      options: ["Halo Reach", "Assassin's Creed II", "God of War III", "Minecraft"],
+      correct: 3
+    },
+    {
+      q: "8.- ¿Cuál es mi árbol favorito?",
+      options: ["Tabachín", "Ceiba", "Framboyán amarillo", "Jacaranda"],
+      correct: 0
+    }
+  ];
+
+  let currentIdx = 0;
+  let lives = 3;
+  let timer = null;
+  let timeLeft = 20;
+  let musicStarted = false;
+
+  const bgMusic = document.getElementById('bg-music');
+
+  function toggleAudio() {
+    if (bgMusic.paused) {
+      bgMusic.play();
+    } else {
+      bgMusic.pause();
+    }
+  }
+
+  function startMusicOnFirstTouch() {
+    if (!musicStarted) {
+      bgMusic.play().then(() => { musicStarted = true; }).catch(() => {});
+      document.removeEventListener('click', startMusicOnFirstTouch);
+    }
+  }
+  document.addEventListener('click', startMusicOnFirstTouch);
+
+  function loadQuestion() {
+    clearInterval(timer);
+    const q = questions[currentIdx];
+
+    // Verificar si entramos a la segunda mitad
+    if (currentIdx === 5 && !this.midpointPassed) {
+      this.midpointPassed = true;
+      document.getElementById('quiz-box').style.display = 'none';
+      document.getElementById('midpoint-banner').style.display = 'block';
+      return;
+    }
+
+    document.getElementById('question-text').innerText = q.q;
+    const optionsGrid = document.getElementById('options-grid');
+    optionsGrid.innerHTML = '';
+
+    q.options.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'btn-option';
+      btn.innerText = opt;
+      btn.onclick = () => selectOption(idx);
+      optionsGrid.appendChild(btn);
+    });
+
+    // Activar temporizador de 20s desde la pregunta 6 en adelante
+    if (currentIdx >= 5) {
+      document.getElementById('timer-display').classList.add('active');
+      startTimer();
+    } else {
+      document.getElementById('timer-display').classList.remove('active');
+    }
+  }
+
+  function startSecondHalf() {
+    document.getElementById('midpoint-banner').style.display = 'none';
+    document.getElementById('quiz-box').style.display = 'block';
+    loadQuestion();
+  }
+
+  function startTimer() {
+    timeLeft = 20;
+    document.getElementById('timer-count').innerText = timeLeft;
+    timer = setInterval(() => {
+      timeLeft--;
+      document.getElementById('timer-count').innerText = timeLeft;
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+        handleMistake();
+      }
+    }, 1000);
+  }
+
+  function selectOption(idx) {
+    clearInterval(timer);
+    const q = questions[currentIdx];
+    if (idx === q.correct) {
+      currentIdx++;
+      if (currentIdx < questions.length) {
+        loadQuestion();
+      } else {
+        showVictory();
+      }
+    } else {
+      handleMistake();
+    }
+  }
+
+  function handleMistake() {
+    const container = document.getElementById('main-container');
+    container.classList.add('shake');
+    setTimeout(() => container.classList.remove('shake'), 400);
+
+    const lifeEl = document.getElementById(`life-${lives}`);
+    if (lifeEl) lifeEl.classList.add('lost');
+
+    lives--;
+
+    if (lives <= 0) {
+      showGameOver();
+    } else {
+      loadQuestion();
+    }
+  }
+
+  function showVictory() {
+    document.getElementById('quiz-box').style.display = 'none';
+    document.getElementById('status-bar').style.display = 'none';
+    document.getElementById('sub-title').style.display = 'none';
+    document.getElementById('final-screen').style.display = 'block';
+  }
+
+  function showGameOver() {
+    document.getElementById('quiz-box').style.display = 'none';
+    document.getElementById('status-bar').style.display = 'none';
+    document.getElementById('gameover-screen').style.display = 'block';
+  }
+
+  function restartGame() {
+    lives = 3;
+    currentIdx = 0;
+    this.midpointPassed = false;
+    document.getElementById('life-1').classList.remove('lost');
+    document.getElementById('life-2').classList.remove('lost');
+    document.getElementById('life-3').classList.remove('lost');
+    document.getElementById('status-bar').style.display = 'flex';
+    document.getElementById('sub-title').style.display = 'block';
+    document.getElementById('gameover-screen').style.display = 'none';
+    document.getElementById('quiz-box').style.display = 'block';
+    loadQuestion();
+  }
+
+  // Inicializar primera pregunta
+  loadQuestion();
+</script>
+</body>
+</html>
