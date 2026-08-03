@@ -5,21 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Búsqueda del Tesoro</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Metamorphous&family=Pinyon+Script&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Metamorphous&family=Pinyon+Script&display=swap');
 
     :root {
-      --pirate-gold: #e5c158;
-      --old-paper: #e7d2b2;
-      --paper-dark: #cdb085;
-      --leather: #2b1a0e;
-      --crimson: #a81c1c;
-      --ink: #2b1e16;
+      --pirate-gold: #d4af37;
+      --old-paper: #e2c799;
+      --paper-dark: #b89865;
+      --leather: #382110;
+      --crimson: #8b1212;
+      --ink: #20140b;
     }
 
     * {
       box-sizing: border-box;
       user-select: none;
-      text-transform: none !important; /* Desactiva cualquier forzado a mayúsculas o minúsculas */
+      text-transform: none !important; /* Desactiva el forzado a mayúsculas */
     }
 
     body {
@@ -31,8 +31,8 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      /* Fondo de mar pirata realista y menos animado */
-      background: linear-gradient(rgba(10, 18, 26, 0.65), rgba(5, 10, 15, 0.85)),
+      /* Fondo de mar pirata realista */
+      background: linear-gradient(rgba(10, 18, 26, 0.7), rgba(5, 10, 15, 0.85)),
                   url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?q=80&w=1600&auto=format&fit=crop');
       background-size: cover;
       background-position: center;
@@ -40,7 +40,7 @@
       overflow-x: hidden;
     }
 
-    /* Reproductor de Audio Oculto / Controles */
+    /* Reproductor de Audio */
     #audio-control {
       position: fixed;
       top: 15px;
@@ -58,84 +58,94 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
 
-    /* Pergamino Principal con Geometría Irregular y Arrugada */
+    /* Pergamino Principal estilo Mapa Antiguo Realista */
     .map-scroll {
       position: relative;
       width: 92%;
       max-width: 680px;
-      background: var(--old-paper);
-      padding: 45px 35px;
+      background: #dfc397;
+      /* Textura de mapa pirata avegentado */
+      background-image: 
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.15) 0%, rgba(139, 90, 43, 0.35) 90%),
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 3px),
+        url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1000&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      padding: 50px 40px;
       text-align: center;
-      /* Formato irregular para simular mapa desgarrado/arrugado original */
+      /* Recorte irregular realista de borde arrugado y quemado */
       clip-path: polygon(
-        0% 2%, 3% 0%, 97% 1%, 100% 3%, 
-        98% 35%, 100% 70%, 97% 98%, 95% 100%, 
-        3% 99%, 0% 96%, 2% 65%, 0% 30%
+        0% 3%, 2% 0%, 98% 1%, 100% 4%, 
+        97% 25%, 99% 50%, 96% 75%, 100% 97%, 97% 100%, 
+        3% 98%, 0% 95%, 2% 70%, 0% 35%
       );
-      box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
-      filter: drop-shadow(0px 15px 12px rgba(0,0,0,0.7));
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+      filter: drop-shadow(0px 15px 15px rgba(0,0,0,0.8));
     }
 
-    /* Capa interna para bordes y pliegues del mapa */
+    /* Bordes y sombras oscurecidas envejecidas */
     .map-scroll::before {
       content: "";
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.2) 0%, transparent 60%),
-                  radial-gradient(circle, transparent 50%, rgba(85, 53, 23, 0.45) 100%),
-                  repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 2px, transparent 2px, transparent 4px);
-      border: 3px solid rgba(92, 55, 29, 0.4);
+      background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(43, 26, 14, 0.6) 100%);
+      border: 3px solid rgba(82, 48, 22, 0.5);
       pointer-events: none;
     }
 
+    /* Título más grueso */
     h1 {
       font-family: 'Metamorphous', cursive;
-      font-size: 1.8rem;
+      font-weight: 900; /* Título más grueso */
+      font-size: 2.2rem;
       color: var(--crimson);
-      margin: 0 0 8px 0;
+      margin: 0 0 6px 0;
       letter-spacing: 1px;
-      text-shadow: 1px 1px 0px rgba(255,255,255,0.4);
+      text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3), -1px -1px 0px rgba(255, 245, 220, 0.5);
     }
 
     .subtitle {
       font-style: italic;
-      font-size: 0.9rem;
-      margin-bottom: 20px;
-      color: #4a3828;
+      font-size: 0.95rem;
+      margin-bottom: 22px;
+      color: #3b281a;
+      font-weight: 600;
     }
 
-    /* Panel Superior: Vidas + Temporizador */
+    /* Panel Superior con estilo rústico */
     .top-status-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(61, 35, 18, 0.12);
+      background: rgba(56, 33, 16, 0.15);
       padding: 10px 20px;
       border-radius: 6px;
-      border: 1px solid rgba(138, 93, 49, 0.3);
+      border: 1px solid rgba(88, 51, 23, 0.4);
       margin-bottom: 25px;
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.15);
     }
 
     .lives-container {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       align-items: center;
-      font-weight: bold;
+      font-weight: 800;
+      color: var(--leather);
     }
 
-    /* Estilo de Corazones para Vidas Originales */
+    /* Estilo de Calaveras Rústicas para Vidas */
     .heart-icon {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       fill: var(--crimson);
       transition: all 0.4s ease;
-      filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.3));
+      filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.4));
     }
 
     .heart-icon.lost {
-      fill: #888888;
-      opacity: 0.25;
-      transform: scale(0.7) rotate(-15deg);
+      fill: #666666;
+      opacity: 0.2;
+      transform: scale(0.7) rotate(-20deg);
     }
 
     .timer-display {
@@ -150,10 +160,10 @@
       visibility: visible;
     }
 
-    /* Tarjeta de Pregunta */
+    /* Tarjeta de Pregunta con papel suave vintage */
     .question-card {
-      background: rgba(255, 255, 255, 0.45);
-      border: 2px dashed rgba(168, 28, 28, 0.4);
+      background: rgba(255, 248, 235, 0.5);
+      border: 2px dashed rgba(139, 18, 18, 0.4);
       padding: 22px 18px;
       border-radius: 6px;
       margin-bottom: 20px;
@@ -161,11 +171,12 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      box-shadow: inset 0 0 10px rgba(110, 70, 30, 0.1);
     }
 
     .question-text {
-      font-size: 1.05rem;
-      font-weight: bold;
+      font-size: 1.1rem;
+      font-weight: 700;
       color: var(--ink);
       line-height: 1.4;
     }
@@ -178,8 +189,8 @@
     }
 
     .btn-option {
-      background: linear-gradient(180deg, #5c3a21 0%, #3a2211 100%);
-      color: var(--old-paper);
+      background: linear-gradient(180deg, #4a2c16 0%, #2b170a 100%);
+      color: #f1e2c3;
       border: 1px solid var(--pirate-gold);
       padding: 13px 18px;
       border-radius: 6px;
@@ -189,11 +200,11 @@
       cursor: pointer;
       transition: all 0.2s ease;
       text-align: left;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
     }
 
     .btn-option:hover {
-      background: linear-gradient(180deg, #822222 0%, #521212 100%);
+      background: linear-gradient(180deg, #7a1616 0%, #4a0a0a 100%);
       border-color: #fff;
       transform: translateY(-2px);
     }
@@ -228,7 +239,7 @@
     }
 
     .reward-scroll {
-      background: rgba(255, 255, 255, 0.65);
+      background: rgba(255, 250, 240, 0.7);
       border: 2px solid var(--crimson);
       padding: 20px;
       border-radius: 8px;
@@ -250,7 +261,7 @@
     }
 
     .btn-action:hover {
-      background: #d32f2f;
+      background: #b31b1b;
     }
 
     /* Animación al equivocarse (Shake) */
@@ -272,7 +283,7 @@
 </head>
 <body>
 
-  <!-- Música de fondo (cancion.mp3 en la misma carpeta) -->
+  <!-- Música de fondo (cancion.mp3) -->
   <audio id="bg-music" loop>
     <source src="cancion.mp3" type="audio/mpeg">
   </audio>
@@ -280,16 +291,16 @@
   <button id="audio-control" onclick="toggleAudio()">Música: ON/OFF</button>
 
   <div class="map-scroll" id="main-container">
-    <h1>¡La Leyenda del Tesoro Pirata!</h1>
+    <h1>Búsqueda del Tesoro</h1>
     <p class="subtitle" id="sub-title">Responde correctamente para avanzar en la travesía...</p>
 
-    <!-- Barra Superior con Corazones -->
+    <!-- Barra Superior con Calaveras Rústicas -->
     <div class="top-status-bar" id="status-bar">
       <div class="lives-container">
         <span>Vidas:</span>
-        <svg class="heart-icon" id="life-1" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-        <svg class="heart-icon" id="life-2" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-        <svg class="heart-icon" id="life-3" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <svg class="heart-icon" id="life-1" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 3.69 2.01 6.91 5 8.65V22h3v-1.12c.64.12 1.31.12 2 .12s1.36 0 2-.12V22h3v-1.35c2.99-1.74 5-4.96 5-8.65 0-5.52-4.48-10-10-10zm-3 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm6 0c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm-3 3c-1.5 0-2.5-.5-2.5-.5s.5 1.5 2.5 1.5 2.5-1.5 2.5-1.5-1 .5-2.5 .5z"/></svg>
+        <svg class="heart-icon" id="life-2" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 3.69 2.01 6.91 5 8.65V22h3v-1.12c.64.12 1.31.12 2 .12s1.36 0 2-.12V22h3v-1.35c2.99-1.74 5-4.96 5-8.65 0-5.52-4.48-10-10-10zm-3 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm6 0c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm-3 3c-1.5 0-2.5-.5-2.5-.5s.5 1.5 2.5 1.5 2.5-1.5 2.5-1.5-1 .5-2.5 .5z"/></svg>
+        <svg class="heart-icon" id="life-3" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 3.69 2.01 6.91 5 8.65V22h3v-1.12c.64.12 1.31.12 2 .12s1.36 0 2-.12V22h3v-1.35c2.99-1.74 5-4.96 5-8.65 0-5.52-4.48-10-10-10zm-3 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm6 0c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm-3 3c-1.5 0-2.5-.5-2.5-.5s.5 1.5 2.5 1.5 2.5-1.5 2.5-1.5-1 .5-2.5 .5z"/></svg>
       </div>
       <div class="timer-display" id="timer-display">Tiempo: <span id="timer-count">20</span>s</div>
     </div>
@@ -328,13 +339,13 @@
   </div>
 
 <script>
-  // Banco de Preguntas con opción correcta 'Audífonos' en la pregunta 1
+  // Banco de preguntas configurado en Mayúsculas y Minúsculas
   const questions = [
     // --- PRIMERA MITAD: Nuestra Historia ---
     {
       q: "1.- ¿Cuál fue mi primer regalo?",
       options: ["Flores", "Soporte de martillo", "Audífonos", "Concierto de MCR"],
-      correct: 2 // Cambiado para que 'Audífonos' sea la respuesta correcta
+      correct: 2 // Audífonos es la respuesta correcta
     },
     {
       q: "2.- ¿Cuáles fueron las primeras flores?",
@@ -348,7 +359,7 @@
     },
     {
       q: "4.- ¿Con qué canción me viste llorar por primera vez?",
-      options: ["We are all alone", "Eyes without a face"],
+      options: ["We Are All Alone", "Eyes Without a Face"],
       correct: 1
     },
     {
