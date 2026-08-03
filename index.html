@@ -7,7 +7,7 @@
   <!-- Script para la animación de confeti de joyas -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Metamorphous&family=Pinyon+Script&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@600;800&family=Spectral:ital,wght@0,500;0,700;1,600&display=swap');
 
     :root {
       --pirate-gold: #d4af37;
@@ -22,13 +22,14 @@
       box-sizing: border-box;
       user-select: none;
       text-transform: none !important;
-      font-variant: normal !important; /* Desactiva las mayúsculas pequeñas / versalitas de la fuente Cinzel */
+      font-variant: normal !important;
+      font-feature-settings: "c2sc" 0, "smcp" 0; /* Desactiva versalitas forzadas */
     }
 
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Cinzel', serif;
+      font-family: 'Spectral', Georgia, serif;
       color: var(--ink);
       min-height: 100vh;
       display: flex;
@@ -55,8 +56,8 @@
       padding: 8px 16px;
       border-radius: 20px;
       cursor: pointer;
-      font-family: 'Cinzel', serif;
-      font-size: 0.85rem;
+      font-family: 'Spectral', Georgia, serif;
+      font-size: 0.9rem;
       letter-spacing: 1px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
@@ -95,18 +96,18 @@
 
     /* Título "Búsqueda del Tesoro" */
     h1 {
-      font-family: 'Metamorphous', cursive;
-      font-weight: 900;
-      font-size: 2.2rem;
+      font-family: 'Grenze Gotisch', cursive;
+      font-weight: 800;
+      font-size: 2.8rem;
       color: var(--crimson);
-      margin: 0 0 6px 0;
+      margin: 0 0 4px 0;
       letter-spacing: 1px;
       text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3), -1px -1px 0px rgba(255, 245, 220, 0.5);
     }
 
     .subtitle {
       font-style: italic;
-      font-size: 0.95rem;
+      font-size: 1.05rem;
       margin-bottom: 22px;
       color: #3b281a;
       font-weight: 600;
@@ -129,8 +130,9 @@
       display: flex;
       gap: 10px;
       align-items: center;
-      font-weight: 800;
+      font-weight: 700;
       color: var(--leather);
+      font-size: 1.1rem;
     }
 
     .heart-icon {
@@ -148,8 +150,8 @@
     }
 
     .timer-display {
-      font-family: 'Metamorphous', cursive;
-      font-size: 1rem;
+      font-family: 'Grenze Gotisch', cursive;
+      font-size: 1.3rem;
       color: var(--crimson);
       font-weight: bold;
       visibility: hidden;
@@ -161,7 +163,7 @@
 
     /* Tarjeta de Pregunta */
     .question-card {
-      background: rgba(255, 248, 235, 0.55);
+      background: rgba(255, 248, 235, 0.65);
       border: 2px dashed rgba(139, 18, 18, 0.4);
       padding: 22px 18px;
       border-radius: 6px;
@@ -174,7 +176,7 @@
     }
 
     .question-text {
-      font-size: 1.1rem;
+      font-size: 1.25rem;
       font-weight: 700;
       color: var(--ink);
       line-height: 1.4;
@@ -193,13 +195,15 @@
       border: 1px solid var(--pirate-gold);
       padding: 13px 18px;
       border-radius: 6px;
-      font-family: 'Cinzel', serif;
-      font-size: 0.95rem;
+      font-family: 'Spectral', Georgia, serif;
+      font-size: 1.1rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
       text-align: left;
       box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+      text-transform: none !important;
+      font-variant: normal !important;
     }
 
     .btn-option:hover {
@@ -221,14 +225,16 @@
     }
 
     #midpoint-banner h3 {
-      font-size: 1.25rem;
+      font-size: 1.4rem;
       margin-top: 0;
       color: var(--pirate-gold);
+      font-family: 'Grenze Gotisch', cursive;
     }
 
     #midpoint-banner p {
       color: #e2c9a1;
       line-height: 1.5;
+      font-size: 1.05rem;
     }
 
     /* Pantallas Finales */
@@ -245,13 +251,26 @@
       margin-top: 15px;
     }
 
+    .reward-scroll h3 {
+      font-family: 'Grenze Gotisch', cursive;
+      font-size: 1.5rem;
+      margin: 0 0 10px 0;
+      color: var(--crimson);
+    }
+
+    .reward-scroll p {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
     .btn-action {
       background: var(--crimson);
       color: white;
       border: none;
       padding: 12px 25px;
-      font-family: 'Cinzel', serif;
-      font-size: 0.95rem;
+      font-family: 'Spectral', Georgia, serif;
+      font-size: 1.05rem;
       font-weight: bold;
       border-radius: 6px;
       cursor: pointer;
@@ -321,8 +340,8 @@
 
     <!-- Pantalla Victoria -->
     <div id="final-screen">
-      <h2>¡Encontraste el tesoro!</h2>
-      <p>Demostraste conocer cada paso de nuestra historia.</p>
+      <h2 style="font-family: 'Grenze Gotisch', cursive; font-size: 2.2rem; color: var(--crimson);">¡Encontraste el tesoro!</h2>
+      <p style="font-size: 1.15rem;">Demostraste conocer cada paso de nuestra historia.</p>
       <div class="reward-scroll">
         <h3>Recompensa</h3>
         <p>Vale por una comida en el Texas Roadhouse.</p>
@@ -331,14 +350,14 @@
 
     <!-- Pantalla Game Over -->
     <div id="gameover-screen">
-      <h2>Has quedado a la deriva...</h2>
-      <p>Te has quedado sin vidas en el mar tempestuoso.</p>
+      <h2 style="font-family: 'Grenze Gotisch', cursive; font-size: 2.2rem; color: var(--crimson);">Has quedado a la deriva...</h2>
+      <p style="font-size: 1.1rem;">Te has quedado sin vidas en el mar tempestuoso.</p>
       <button class="btn-action" onclick="restartGame()">Reintentar la búsqueda</button>
     </div>
   </div>
 
 <script>
-  // Banco de preguntas actualizado con exactamente las opciones y respuestas solicitadas
+  // Banco de preguntas con uso natural de mayúsculas y minúsculas
   const questions = [
     // --- PRIMERA MITAD: Nuestra Historia ---
     {
@@ -371,7 +390,7 @@
       options: ["Puerta 1", "Puerta 3", "Puerta 4", "Nuestro primer hike no fue en los Dínamos"],
       correct: 3
     },
-    // --- SEGUNDA MITAD: Preguntas Personales sobre Diego (con temporizador) ---
+    // --- SEGUNDA MITAD: Preguntas Personales sobre Diego ---
     {
       q: "7.- ¿Cuál es mi comida favorita?",
       options: ["Pollo almendrado Log Yin", "Hamburguesas Rubens", "Chicken Bake Costco", "Lasaña Armandos"],
@@ -384,7 +403,7 @@
     },
     {
       q: "9.- ¿Cuál es mi árbol favorito?",
-      options: ["Ceiba", "Tabachín", "Framboyán amarillo", "Jacaranda"], // Tabachín invertido a opción 2
+      options: ["Ceiba", "Tabachín", "Framboyán amarillo", "Jacaranda"],
       correct: 1
     },
     {
@@ -427,7 +446,6 @@
     clearInterval(timer);
     const q = questions[currentIdx];
 
-    // Transición a la segunda mitad
     if (currentIdx === 6 && !this.midpointPassed) {
       this.midpointPassed = true;
       document.getElementById('quiz-box').style.display = 'none';
@@ -519,7 +537,6 @@
 
       const particleCount = 40 * (timeLeft / duration);
 
-      // Confeti con temáticas y colores de joyas/monedas pirata: oro, rubíes, esmeraldas y diamantes
       confetti({
         particleCount: particleCount,
         startVelocity: 30,
@@ -539,7 +556,6 @@
     document.getElementById('sub-title').style.display = 'none';
     document.getElementById('final-screen').style.display = 'block';
     
-    // Lanzar confeti pirata de joyas
     launchPirateJewelsConfetti();
   }
 
