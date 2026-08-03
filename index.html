@@ -60,7 +60,7 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
 
-    /* Mapa Pergamino Antiguo Cortado / Quemado */
+    /* Mapa Pergamino Antiguo Cortado / Hoja Vieja e Irregular */
     .map-scroll {
       position: relative;
       width: 92%;
@@ -74,11 +74,12 @@
       background-position: center;
       padding: 55px 42px;
       text-align: center;
-      /* Silueta irregular realista estilo papel desgarrado de pirata */
+      /* Silueta súper irregular de hoja de papel vieja y rota/rasgada */
       clip-path: polygon(
-        2% 0%, 96% 2%, 100% 6%, 98% 28%, 
-        100% 52%, 97% 78%, 99% 96%, 94% 100%, 
-        4% 98%, 0% 92%, 3% 68%, 0% 32%
+        2% 1.5%, 15% 0.5%, 35% 2%, 55% 0.8%, 78% 2.2%, 94% 0.5%, 98.5% 4.5%,
+        97% 18%, 99.5% 33%, 96.5% 48%, 99% 65%, 96% 82%, 98.5% 95.5%, 88% 99%,
+        68% 97.5%, 48% 99.2%, 28% 97.8%, 12% 99.5%, 1.5% 96%,
+        3.5% 82%, 0.8% 64%, 3% 46%, 1% 28%, 3.2% 14%
       );
       box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
       filter: drop-shadow(0px 15px 15px rgba(0,0,0,0.8));
@@ -88,7 +89,7 @@
       content: "";
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(circle at 50% 50%, transparent 45%, rgba(35, 18, 8, 0.6) 100%);
+      background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(35, 18, 8, 0.65) 100%);
       border: 3px solid rgba(82, 48, 22, 0.4);
       pointer-events: none;
     }
@@ -322,8 +323,8 @@
     <!-- Banner Mitad del Camino -->
     <div id="midpoint-banner">
       <h3>Llegaste a la mitad del camino pirata</h3>
-      <p>Ahora serán preguntas personales acerca de Diego. Tienes un máximo de 20 segundos por respuesta.</p>
-      <button class="btn-action" onclick="startSecondHalf()">Continuar travesía</button>
+      <p>Ahora serán preguntas personales acerca del Piniweenie. Tienes un máximo de 20 segundos por respuesta.</p>
+      <button class="btn-action" onclick="startSecondHalf()">Continuar</button>
     </div>
 
     <!-- Juego Activo -->
@@ -376,38 +377,33 @@
       correct: 0
     },
     {
-      q: "5.- ¿Con qué canción me viste llorar por primera vez?",
-      options: ["We are all alone", "Eyes without a face"],
-      correct: 1
-    },
-    {
-      q: "6.- ¿Cuál Dínamo visitamos en nuestro primer hike?",
+      q: "5.- ¿Cuál Dínamo visitamos en nuestro primer hike?",
       options: ["Puerta 1", "Puerta 3", "Puerta 4", "Nuestro primer hike no fue en los Dínamos"],
       correct: 3
     },
-    // --- SEGUNDA MITAD: Preguntas Personales sobre Diego ---
+    // --- SEGUNDA MITAD: Preguntas Personales sobre el Piniweenie ---
     {
-      q: "7.- ¿Cuál es mi comida favorita?",
+      q: "6.- ¿Cuál es mi comida favorita?",
       options: ["Pollo almendrado Log Yin", "Hamburguesas Rubens", "Chicken Bake Costco", "Lasaña Armandos"],
       correct: 0
     },
     {
-      q: "8.- ¿Cuál es mi videojuego favorito?",
+      q: "7.- ¿Cuál es mi videojuego favorito?",
       options: ["Halo Reach", "Assassin's Creed II", "God of War III", "Minecraft"],
       correct: 3
     },
     {
-      q: "9.- ¿Cuál es mi árbol favorito?",
-      options: ["Ceiba", "Tabachín", "Framboyán amarillo", "Jacaranda"], // Tabachín invertido a la opción 2
+      q: "8.- ¿Cuál es mi árbol favorito?",
+      options: ["Ceiba", "Tabachín", "Framboyán amarillo", "Jacaranda"],
       correct: 1
     },
     {
-      q: "10.- ¿Cuántos huesos me he roto?",
+      q: "9.- ¿Cuántos huesos me he roto?",
       options: ["Cero", "1", "Fisura", "2"],
       correct: 2
     },
     {
-      q: "11.- ¿Cuál es mi máquina favorita del taller?",
+      q: "10.- ¿Cuál es mi máquina favorita del taller?",
       options: ["Dobladora Universal", "Fresadora", "Soldadura MIG", "Torno"],
       correct: 3
     }
@@ -441,7 +437,7 @@
     clearInterval(timer);
     const q = questions[currentIdx];
 
-    if (currentIdx === 6 && !this.midpointPassed) {
+    if (currentIdx === 5 && !this.midpointPassed) {
       this.midpointPassed = true;
       document.getElementById('quiz-box').style.display = 'none';
       document.getElementById('midpoint-banner').style.display = 'block';
@@ -460,7 +456,7 @@
       optionsGrid.appendChild(btn);
     });
 
-    if (currentIdx >= 6) {
+    if (currentIdx >= 5) {
       document.getElementById('timer-display').classList.add('active');
       startTimer();
     } else {
