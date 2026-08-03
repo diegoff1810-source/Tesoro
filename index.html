@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Búsqueda del Tesoro</title>
+  <!-- Script para la animación de confeti de joyas -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Metamorphous&family=Pinyon+Script&display=swap');
 
@@ -19,7 +21,8 @@
     * {
       box-sizing: border-box;
       user-select: none;
-      text-transform: none !important; /* Desactiva completamente cualquier conversión automática a mayúsculas */
+      text-transform: none !important;
+      font-variant: normal !important; /* Desactiva las mayúsculas pequeñas / versalitas de la fuente Cinzel */
     }
 
     body {
@@ -64,7 +67,6 @@
       width: 92%;
       max-width: 680px;
       background: #dfc397;
-      /* Fondo de textura de mapa del tesoro antiguo en pergamino */
       background-image: 
         radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2) 0%, rgba(110, 68, 28, 0.45) 90%),
         repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 2px, transparent 2px, transparent 4px),
@@ -73,7 +75,6 @@
       background-position: center;
       padding: 50px 40px;
       text-align: center;
-      /* Recorte irregular realista de borde arrugado y desgastado */
       clip-path: polygon(
         0% 3%, 2% 0%, 98% 1%, 100% 4%, 
         97% 25%, 99% 50%, 96% 75%, 100% 97%, 97% 100%, 
@@ -83,7 +84,6 @@
       filter: drop-shadow(0px 15px 15px rgba(0,0,0,0.8));
     }
 
-    /* Bordes y sombras oscurecidas envejecidas */
     .map-scroll::before {
       content: "";
       position: absolute;
@@ -93,7 +93,7 @@
       pointer-events: none;
     }
 
-    /* Título grueso "Búsqueda del Tesoro" */
+    /* Título "Búsqueda del Tesoro" */
     h1 {
       font-family: 'Metamorphous', cursive;
       font-weight: 900;
@@ -112,7 +112,7 @@
       font-weight: 600;
     }
 
-    /* Panel Superior con estilo rústico */
+    /* Panel Superior */
     .top-status-bar {
       display: flex;
       justify-content: space-between;
@@ -133,7 +133,6 @@
       color: var(--leather);
     }
 
-    /* Estilo de Calaveras Rústicas para Vidas */
     .heart-icon {
       width: 24px;
       height: 24px;
@@ -160,7 +159,7 @@
       visibility: visible;
     }
 
-    /* Tarjeta de Pregunta en pergamino */
+    /* Tarjeta de Pregunta */
     .question-card {
       background: rgba(255, 248, 235, 0.55);
       border: 2px dashed rgba(139, 18, 18, 0.4);
@@ -264,7 +263,7 @@
       background: #b31b1b;
     }
 
-    /* Animación al equivocarse (Shake) */
+    /* Animación al equivocarse */
     .shake {
       animation: shakeAnim 0.4s ease-in-out;
     }
@@ -292,9 +291,9 @@
 
   <div class="map-scroll" id="main-container">
     <h1>Búsqueda del Tesoro</h1>
-    <p class="subtitle" id="sub-title">Responde correctamente para avanzar en la travesía...</p>
+    <p class="subtitle" id="sub-title">Responde correctamente para encontrar la sorpresa del tesoro.</p>
 
-    <!-- Barra Superior con Calaveras Rústicas -->
+    <!-- Barra Superior -->
     <div class="top-status-bar" id="status-bar">
       <div class="lives-container">
         <span>Vidas:</span>
@@ -322,11 +321,11 @@
 
     <!-- Pantalla Victoria -->
     <div id="final-screen">
-      <h2>¡Has completado el mapa del tesoro!</h2>
-      <p>Demostraste conocer cada paso de esta gran historia.</p>
+      <h2>¡Encontraste el tesoro!</h2>
+      <p>Demostraste conocer cada paso de nuestra historia.</p>
       <div class="reward-scroll">
-        <h3>Recompensa final</h3>
-        <p>Vale por una cita especial y un cofre de momentos por seguir construyendo juntos.</p>
+        <h3>Recompensa</h3>
+        <p>Vale por una comida en el Texas Roadhouse.</p>
       </div>
     </div>
 
@@ -339,13 +338,13 @@
   </div>
 
 <script>
-  // Banco de preguntas configurado en Mayúsculas y Minúsculas de forma exacta
+  // Banco de preguntas actualizado con exactamente las opciones y respuestas solicitadas
   const questions = [
     // --- PRIMERA MITAD: Nuestra Historia ---
     {
       q: "1.- ¿Cuál fue mi primer regalo?",
       options: ["Flores", "Soporte de martillo", "Audífonos", "Concierto de MCR"],
-      correct: 2 // Respuesta correcta: Audífonos
+      correct: 2
     },
     {
       q: "2.- ¿Cuáles fueron las primeras flores?",
@@ -363,25 +362,40 @@
       correct: 1
     },
     {
-      q: "5.- ¿Cuál Dínamo visitamos en nuestro primer hike?",
+      q: "5.- ¿Cuál fue el primer juego de mesa que jugamos?",
+      options: ["Hister", "Virus", "Futbolito", "Rompecabezas"],
+      correct: 0
+    },
+    {
+      q: "6.- ¿Cuál Dínamo visitamos en nuestro primer hike?",
       options: ["Puerta 1", "Puerta 3", "Puerta 4", "Nuestro primer hike no fue en los Dínamos"],
       correct: 3
     },
     // --- SEGUNDA MITAD: Preguntas Personales sobre Diego (con temporizador) ---
     {
-      q: "6.- ¿Cuál es mi comida favorita?",
+      q: "7.- ¿Cuál es mi comida favorita?",
       options: ["Pollo almendrado Log Yin", "Hamburguesas Rubens", "Chicken Bake Costco", "Lasaña Armandos"],
       correct: 0
     },
     {
-      q: "7.- ¿Cuál es mi videojuego favorito?",
+      q: "8.- ¿Cuál es mi videojuego favorito?",
       options: ["Halo Reach", "Assassin's Creed II", "God of War III", "Minecraft"],
       correct: 3
     },
     {
-      q: "8.- ¿Cuál es mi árbol favorito?",
-      options: ["Tabachín", "Ceiba", "Framboyán amarillo", "Jacaranda"],
-      correct: 0
+      q: "9.- ¿Cuál es mi árbol favorito?",
+      options: ["Ceiba", "Tabachín", "Framboyán amarillo", "Jacaranda"], // Tabachín invertido a opción 2
+      correct: 1
+    },
+    {
+      q: "10.- ¿Cuántos huesos me he roto?",
+      options: ["Cero", "1", "Fisura", "2"],
+      correct: 2
+    },
+    {
+      q: "11.- ¿Cuál es mi máquina favorita del taller?",
+      options: ["Dobladora Universal", "Fresadora", "Soldadura MIG", "Torno"],
+      correct: 3
     }
   ];
 
@@ -413,8 +427,8 @@
     clearInterval(timer);
     const q = questions[currentIdx];
 
-    // Verificar si entramos a la segunda mitad
-    if (currentIdx === 5 && !this.midpointPassed) {
+    // Transición a la segunda mitad
+    if (currentIdx === 6 && !this.midpointPassed) {
       this.midpointPassed = true;
       document.getElementById('quiz-box').style.display = 'none';
       document.getElementById('midpoint-banner').style.display = 'block';
@@ -433,8 +447,7 @@
       optionsGrid.appendChild(btn);
     });
 
-    // Activar temporizador de 20s desde la pregunta 6 en adelante
-    if (currentIdx >= 5) {
+    if (currentIdx >= 6) {
       document.getElementById('timer-display').classList.add('active');
       startTimer();
     } else {
@@ -493,11 +506,41 @@
     }
   }
 
+  function launchPirateJewelsConfetti() {
+    const duration = 3.5 * 1000;
+    const animationEnd = Date.now() + duration;
+
+    const interval = setInterval(function() {
+      const timeLeft = animationEnd - Date.now();
+
+      if (timeLeft <= 0) {
+        return clearInterval(interval);
+      }
+
+      const particleCount = 40 * (timeLeft / duration);
+
+      // Confeti con temáticas y colores de joyas/monedas pirata: oro, rubíes, esmeraldas y diamantes
+      confetti({
+        particleCount: particleCount,
+        startVelocity: 30,
+        spread: 360,
+        ticks: 60,
+        origin: { x: Math.random(), y: Math.random() - 0.2 },
+        colors: ['#FFD700', '#D4AF37', '#DC143C', '#00A86B', '#E0FFFF', '#B9F2FF'],
+        shapes: ['circle', 'square'],
+        scalar: 1.2
+      });
+    }, 250);
+  }
+
   function showVictory() {
     document.getElementById('quiz-box').style.display = 'none';
     document.getElementById('status-bar').style.display = 'none';
     document.getElementById('sub-title').style.display = 'none';
     document.getElementById('final-screen').style.display = 'block';
+    
+    // Lanzar confeti pirata de joyas
+    launchPirateJewelsConfetti();
   }
 
   function showGameOver() {
@@ -516,6 +559,7 @@
     document.getElementById('status-bar').style.display = 'flex';
     document.getElementById('sub-title').style.display = 'block';
     document.getElementById('gameover-screen').style.display = 'none';
+    document.getElementById('final-screen').style.display = 'none';
     document.getElementById('quiz-box').style.display = 'block';
     loadQuestion();
   }
