@@ -3,222 +3,252 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Búsqueda del Tesoro</title>
+  <title>Por el Botín de Diego - La Aventura Comienza</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Metamorphous&family=Pinyon+Script&display=swap');
+    /* Importación de fuentes más rústicas y piratas */
+    @import url('https://fonts.googleapis.com/css2?family=Trade+Winds&family=Special+Elite&family=Pinyon+Script&display=swap');
 
     :root {
-      --pirate-gold: #e5c158;
-      --old-paper: #e7d2b2;
-      --paper-dark: #cdb085;
-      --leather: #2b1a0e;
-      --crimson: #a81c1c;
-      --ink: #2b1e16;
+      --pirate-gold: #c5a038; /* Oro más viejo */
+      --old-paper: #dabe91; /* Papel más oscuro y envejecido */
+      --paper-dark: #a68a64;
+      --leather: #3e2714;
+      --crimson: #8e1515; /* Rojo más oscuro */
+      --ink: #1a110a;
     }
 
     * {
       box-sizing: border-box;
       user-select: none;
-      text-transform: none !important; /* Desactiva cualquier forzado a mayúsculas */
+      /* Eliminado text-transform forzado para respetar mayúsculas/minúsculas */
     }
 
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Cinzel', serif;
+      /* Fuente principal cambiada a Special Elite para un toque rústico de máquina de escribir */
+      font-family: 'Special Elite', cursive;
       color: var(--ink);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      /* Fondo de playa pirata/costera */
-      background: linear-gradient(rgba(10, 25, 35, 0.55), rgba(5, 12, 18, 0.75)),
-                  url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop');
+      /* Fondo cambiado a una textura de madera oscura y desgastada */
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.85)),
+                  url('https://images.unsplash.com/photo-1599388302302-3f7f4a210740?q=80&w=1600&auto=format&fit=crop');
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
       overflow-x: hidden;
     }
 
-    /* Reproductor de Audio Oculto / Controles */
+    /* Reproductor de Audio Estilo Botón Viejo */
     #audio-control {
       position: fixed;
       top: 15px;
       right: 15px;
       z-index: 100;
-      background: rgba(31, 24, 17, 0.9);
-      border: 2px solid var(--pirate-gold);
+      background: rgba(62, 39, 20, 0.9);
+      border: 2px solid var(--paper-dark);
       color: var(--pirate-gold);
       padding: 8px 16px;
-      border-radius: 20px;
+      border-radius: 5px;
       cursor: pointer;
-      font-family: 'Cinzel', serif;
-      font-size: 0.85rem;
+      font-family: 'Trade Winds', cursive;
+      font-size: 0.8rem;
       letter-spacing: 1px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      box-shadow: 3px 3px 5px rgba(0,0,0,0.7);
     }
 
-    /* Pergamino Principal con Geometría Irregular y Arrugada */
+    /* Pergamino Principal con Aspecto Enrollado y Quemado */
     .map-scroll {
       position: relative;
       width: 92%;
       max-width: 680px;
       background: var(--old-paper);
-      padding: 45px 35px;
+      padding: 60px 45px; /* Más padding para los "rollos" */
       text-align: center;
-      /* Formato irregular para simular mapa desgarrado/arrugado */
-      clip-path: polygon(
-        0% 2%, 3% 0%, 97% 1%, 100% 3%, 
-        98% 35%, 100% 70%, 97% 98%, 95% 100%, 
-        3% 99%, 0% 96%, 2% 65%, 0% 30%
-      );
-      box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
-      filter: drop-shadow(0px 15px 12px rgba(0,0,0,0.7));
+      /* Fondo de textura de pergamino real arrugado */
+      background-image: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+      border-radius: 15px;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.9) inset, 10px 10px 25px rgba(0,0,0,0.8);
     }
 
-    /* Capa interna para bordes y pliegues del mapa */
-    .map-scroll::before {
+    /* Simulación de bordes enrollados y quemados */
+    .map-scroll::before, .map-scroll::after {
       content: "";
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.2) 0%, transparent 60%),
-                  radial-gradient(circle, transparent 50%, rgba(85, 53, 23, 0.45) 100%),
-                  repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 2px, transparent 2px, transparent 4px);
-      border: 3px solid rgba(92, 55, 29, 0.4);
-      pointer-events: none;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+    }
+
+    /* Borde superior enrollado */
+    .map-scroll::before {
+      top: -15px;
+      background-image: radial-gradient(ellipse at center, var(--paper-dark) 0%, transparent 70%),
+                        linear-gradient(to bottom, transparent, var(--paper-dark) 15px, var(--old-paper) 25px);
+      border-radius: 15px 15px 0 0;
+    }
+
+    /* Borde inferior enrollado y efecto quemado */
+    .map-scroll::after {
+      bottom: -15px;
+      background-image: radial-gradient(ellipse at center, var(--paper-dark) 0%, transparent 70%),
+                        linear-gradient(to top, transparent, var(--paper-dark) 15px, var(--old-paper) 25px);
+      border-radius: 0 0 15px 15px;
+      box-shadow: 0 10px 15px -5px rgba(0,0,0,0.6);
+    }
+
+    /* Efecto de bordes quemados irregulares */
+    #main-container {
+      border: 10px solid transparent;
+      border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="%23a68a64"/><path d="M10,10 L90,10 L90,90 L10,90 Z" fill="%23dabe91"/><path d="M0,10 Q5,0 10,10 T20,10 T30,10 T40,10 T50,10 T60,10 T70,10 T80,10 T90,10 T100,10 Q95,0 100,0 L100,100 Q95,110 100,110 T90,100 T80,100 T70,100 T60,100 T50,100 T40,100 T30,100 T20,100 T10,100 T0,100 Q5,110 0,110 Z" fill="%231a110a" opacity="0.5"/></svg>') 20 stretch;
     }
 
     h1 {
-      font-family: 'Metamorphous', cursive;
-      font-size: 1.8rem;
+      font-family: 'Trade Winds', cursive;
+      font-size: 2.2rem;
       color: var(--crimson);
-      margin: 0 0 8px 0;
+      margin: 0 0 15px 0;
       letter-spacing: 1px;
-      text-shadow: 1px 1px 0px rgba(255,255,255,0.4);
+      text-shadow: 2px 2px 2px rgba(0,0,0,0.6);
     }
 
     .subtitle {
-      font-style: italic;
-      font-size: 0.9rem;
-      margin-bottom: 20px;
-      color: #4a3828;
+      font-family: 'Pinyon Script', cursive; /* Fuente manuscrita elegante */
+      font-size: 1.3rem;
+      margin-bottom: 25px;
+      color: #3e2714;
+      font-weight: bold;
     }
 
-    /* Panel Superior: Vidas + Temporizador */
+    /* Panel Superior Estilo Tablón Viejo */
     .top-status-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(61, 35, 18, 0.12);
-      padding: 10px 20px;
-      border-radius: 6px;
-      border: 1px solid rgba(138, 93, 49, 0.3);
-      margin-bottom: 25px;
+      background: rgba(166, 138, 100, 0.3);
+      padding: 12px 25px;
+      border-radius: 5px;
+      border: 2px solid rgba(62, 39, 20, 0.5);
+      margin-bottom: 30px;
+      box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3);
     }
 
     .lives-container {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       align-items: center;
       font-weight: bold;
+      color: var(--leather);
     }
 
-    /* Estilo de Corazones para Vidas */
+    /* Estilo de Calaveras para Vidas (más pirata que corazones) */
     .heart-icon {
-      width: 22px;
-      height: 22px;
+      width: 26px;
+      height: 26px;
       fill: var(--crimson);
       transition: all 0.4s ease;
-      filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.3));
+      filter: drop-shadow(2px 2px 1px rgba(0,0,0,0.5));
     }
 
     .heart-icon.lost {
-      fill: #888888;
-      opacity: 0.25;
-      transform: scale(0.7) rotate(-15deg);
+      fill: #444;
+      opacity: 0.3;
+      transform: scale(0.8) rotate(20deg);
     }
 
     .timer-display {
-      font-family: 'Metamorphous', cursive;
-      font-size: 1rem;
+      font-family: 'Trade Winds', cursive;
+      font-size: 1.1rem;
       color: var(--crimson);
       font-weight: bold;
       visibility: hidden;
+      text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
     }
 
     .timer-display.active {
       visibility: visible;
     }
 
-    /* Tarjeta de Pregunta */
+    /* Tarjeta de Pregunta Estilo Piel/Tela Vieja */
     .question-card {
-      background: rgba(255, 255, 255, 0.45);
-      border: 2px dashed rgba(168, 28, 28, 0.4);
-      padding: 22px 18px;
-      border-radius: 6px;
-      margin-bottom: 20px;
-      min-height: 100px;
+      background: rgba(62, 39, 20, 0.1);
+      border: 3px solid rgba(62, 39, 20, 0.3);
+      border-radius: 8px;
+      padding: 25px 20px;
+      margin-bottom: 25px;
+      min-height: 110px;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
     }
 
     .question-text {
-      font-size: 1.05rem;
+      font-size: 1.2rem;
       font-weight: bold;
       color: var(--ink);
-      line-height: 1.4;
+      line-height: 1.5;
     }
 
-    /* Opciones de Respuesta */
+    /* Opciones de Respuesta Estilo Tablones de Madera */
     .options-grid {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 15px;
     }
 
     .btn-option {
-      background: linear-gradient(180deg, #5c3a21 0%, #3a2211 100%);
+      background: linear-gradient(180deg, #5c3a21 0%, #2b1a0e 100%);
       color: var(--old-paper);
-      border: 1px solid var(--pirate-gold);
-      padding: 13px 18px;
-      border-radius: 6px;
-      font-family: 'Cinzel', serif;
-      font-size: 0.95rem;
-      font-weight: 600;
+      border: 2px solid #a68a64;
+      padding: 15px 20px;
+      border-radius: 4px;
+      font-family: 'Special Elite', cursive;
+      font-size: 1rem;
+      font-weight: bold;
       cursor: pointer;
       transition: all 0.2s ease;
       text-align: left;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      box-shadow: 3px 3px 6px rgba(0,0,0,0.6);
+      text-transform: none; /* Asegura que se respete el caso */
     }
 
     .btn-option:hover {
-      background: linear-gradient(180deg, #822222 0%, #521212 100%);
-      border-color: #fff;
+      background: linear-gradient(180deg, #8e1515 0%, #521212 100%);
+      border-color: #dabe91;
       transform: translateY(-2px);
+      box-shadow: 4px 4px 8px rgba(0,0,0,0.7);
     }
 
-    /* Banner Intermedio */
+    /* Banner Intermedio Estilo Cofre */
     #midpoint-banner {
       display: none;
       background: var(--leather);
       color: var(--pirate-gold);
-      padding: 25px 20px;
-      border-radius: 8px;
-      border: 2px solid var(--pirate-gold);
-      margin-bottom: 20px;
+      padding: 30px 25px;
+      border-radius: 10px;
+      border: 3px solid var(--pirate-gold);
+      margin-bottom: 25px;
       animation: fadeIn 0.5s ease;
+      box-shadow: 0 0 20px rgba(197, 160, 56, 0.5);
     }
 
     #midpoint-banner h3 {
-      font-size: 1.25rem;
+      font-family: 'Trade Winds', cursive;
+      font-size: 1.5rem;
       margin-top: 0;
       color: var(--pirate-gold);
     }
 
     #midpoint-banner p {
       color: #e2c9a1;
-      line-height: 1.5;
+      line-height: 1.6;
+      font-size: 1.1rem;
     }
 
     /* Pantallas Finales */
@@ -228,29 +258,36 @@
     }
 
     .reward-scroll {
-      background: rgba(255, 255, 255, 0.65);
-      border: 2px solid var(--crimson);
-      padding: 20px;
+      background: rgba(166, 138, 100, 0.4);
+      border: 3px solid var(--crimson);
+      padding: 25px;
       border-radius: 8px;
-      margin-top: 15px;
+      margin-top: 20px;
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.3);
+    }
+    
+    .reward-scroll h3 {
+        font-family: 'Trade Winds', cursive;
+        color: var(--crimson);
     }
 
     .btn-action {
       background: var(--crimson);
       color: white;
-      border: none;
-      padding: 12px 25px;
-      font-family: 'Cinzel', serif;
-      font-size: 0.95rem;
-      font-weight: bold;
+      border: 2px solid #b71c1c;
+      padding: 14px 30px;
+      font-family: 'Trade Winds', cursive;
+      font-size: 1rem;
       border-radius: 6px;
       cursor: pointer;
-      margin-top: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      margin-top: 20px;
+      box-shadow: 4px 4px 10px rgba(0,0,0,0.6);
+      transition: all 0.2s ease;
     }
 
     .btn-action:hover {
-      background: #d32f2f;
+      background: #b71c1c;
+      transform: scale(1.05);
     }
 
     /* Animación al equivocarse (Shake) */
@@ -260,12 +297,12 @@
 
     @keyframes shakeAnim {
       0%, 100% { transform: translateX(0); }
-      20%, 60% { transform: translateX(-12px); }
-      40%, 80% { transform: translateX(12px); }
+      20%, 60% { transform: translateX(-15px); }
+      40%, 80% { transform: translateX(15px); }
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
   </style>
@@ -280,61 +317,62 @@
   <button id="audio-control" onclick="toggleAudio()">Música: ON/OFF</button>
 
   <div class="map-scroll" id="main-container">
-    <h1>La Búsqueda del Tesoro</h1>
-    <p class="subtitle" id="sub-title">Responde correctamente para avanzar en la travesía...</p>
+    <h1>¡Por el Botín de Diego!</h1>
+    <p class="subtitle" id="sub-title">Resuelve los enigmas para reclamar el tesoro...</p>
 
-    <!-- Barra Superior con Corazones -->
+    <!-- Barra Superior con Calaveras -->
     <div class="top-status-bar" id="status-bar">
       <div class="lives-container">
         <span>Vidas:</span>
-        <svg class="heart-icon" id="life-1" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-        <svg class="heart-icon" id="life-2" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-        <svg class="heart-icon" id="life-3" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <!-- Iconos cambiados a calaveras -->
+        <svg class="heart-icon" id="life-1" viewBox="0 0 24 24"><path d="M12 2c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61l-1.97 4.39 5.61-1.97c1.54 1.23 3.49 1.97 5.61 1.97 4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7zm-3-8c.55 0 1-.45 1-1s-.45-1-1-1-1 .45-1 1 .45 1 1 1zm6 0c.55 0 1-.45 1-1s-.45-1-1-1-1 .45-1 1 .45 1 1 1zm-3 4c-2.33 0-4.31 1.46-5.11 3.5h10.22c-.8-2.04-2.78-3.5-5.11-3.5z"/></svg>
+        <svg class="heart-icon" id="life-2" viewBox="0 0 24 24"><path d="M12 2c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61l-1.97 4.39 5.61-1.97c1.54 1.23 3.49 1.97 5.61 1.97 4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7zm-3-8c.55 0 1-.45 1-1s-.45-1-1-1-1 .45-1 1 .45 1 1 1zm6 0c.55 0 1-.45 1-1s-.45-1-1-1-1 .45-1 1 .45 1 1 1zm-3 4c-2.33 0-4.31 1.46-5.11 3.5h10.22c-.8-2.04-2.78-3.5-5.11-3.5z"/></svg>
+        <svg class="heart-icon" id="life-3" viewBox="0 0 24 24"><path d="M12 2c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61l-1.97 4.39 5.61-1.97c1.54 1.23 3.49 1.97 5.61 1.97 4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7zm-3-8c.55 0 1-.45 1-1s-.45-1-1-1-1 .45-1 1 .45 1 1 1zm6 0c.55 0 1-.45 1-1s-.45-1-1-1-1 .45-1 1 .45 1 1 1zm-3 4c-2.33 0-4.31 1.46-5.11 3.5h10.22c-.8-2.04-2.78-3.5-5.11-3.5z"/></svg>
       </div>
       <div class="timer-display" id="timer-display">Tiempo: <span id="timer-count">20</span>s</div>
     </div>
 
     <!-- Banner Mitad del Camino -->
     <div id="midpoint-banner">
-      <h3>Llegaste a la mitad del camino pirata</h3>
-      <p>Ahora serán preguntas personales acerca de Diego. Tienes un máximo de 20 segundos por respuesta.</p>
-      <button class="btn-action" onclick="startSecondHalf()">Continuar travesía</button>
+      <h3>¡Atención, Tripulación!</h3>
+      <p>Habéis demostrado vuestra valía, pero ahora la travesía se vuelve personal. Las siguientes preguntas son sobre los secretos del mismísimo Diego. ¡Tenéis solo 20 segundos por enigma o iréis al agua!</p>
+      <button class="btn-action" onclick="startSecondHalf()">Continuar la Travesía</button>
     </div>
 
     <!-- Juego Activo -->
     <div id="quiz-box">
       <div class="question-card">
-        <div class="question-text" id="question-text">Cargando...</div>
+        <div class="question-text" id="question-text">Cargando mapa...</div>
       </div>
       <div class="options-grid" id="options-grid"></div>
     </div>
 
     <!-- Pantalla Victoria -->
     <div id="final-screen">
-      <h2>¡Has completado el mapa del tesoro!</h2>
-      <p>Demostraste conocer cada paso de esta gran historia.</p>
+      <h2>¡El Botín es Vuestro!</h2>
+      <p>Habéis descifrado cada mapa y superado cada tempestad. Sois verdaderos leyendas de los siete mares.</p>
       <div class="reward-scroll">
-        <h3>Recompensa final</h3>
-        <p>Vale por una cita especial y un cofre de momentos por seguir construyendo juntos.</p>
+        <h3>Vuestra Recompensa</h3>
+        <p>Este pergamino vale por una cita especial y un cofre lleno de nuevos momentos por vivir juntos. ¡Que corra el ron!</p>
       </div>
     </div>
 
     <!-- Pantalla Game Over -->
     <div id="gameover-screen">
-      <h2>Has quedado a la deriva...</h2>
-      <p>Te has quedado sin vidas en el mar tempestuoso.</p>
-      <button class="btn-action" onclick="restartGame()">Reintentar la búsqueda</button>
+      <h2>¡Al Agua con Vos!</h2>
+      <p>Vuestras respuestas os han llevado a la deriva en el mar tempestuoso sin vidas...</p>
+      <button class="btn-action" onclick="restartGame()">Reintentar la Búsqueda</button>
     </div>
   </div>
 
 <script>
-  // Banco de Preguntas en formato mixto estándar
+  // Banco de Preguntas con mayúsculas/minúsculas corregidas
   const questions = [
     // --- PRIMERA MITAD: Nuestra Historia ---
     {
       q: "1.- ¿Cuál fue mi primer regalo?",
       options: ["Flores", "Soporte de martillo", "Audífonos", "Concierto de MCR"],
-      correct: 1
+      correct: 2 // Corregido el índice a Audífonos
     },
     {
       q: "2.- ¿Cuáles fueron las primeras flores?",
@@ -348,18 +386,18 @@
     },
     {
       q: "4.- ¿Con qué canción me viste llorar por primera vez?",
-      options: ["We are all alone", "Eyes without a face"],
+      options: ["We Are All Alone", "Eyes Without A Face"], // Corregido formato
       correct: 1
     },
     {
       q: "5.- ¿Cuál Dínamo visitamos en nuestro primer hike?",
-      options: ["Puerta 1", "Puerta 3", "Puerta 4", "Nuestro primer hike no fue en los Dínamos"],
+      options: ["Puerta 1", "Puerta 3", "Puerta 4", "Nuestro primer hike no fue en Los Dínamos"], // Corregido formato
       correct: 3
     },
     // --- SEGUNDA MITAD: Preguntas Personales sobre Diego (con temporizador) ---
     {
       q: "6.- ¿Cuál es mi comida favorita?",
-      options: ["Pollo almendrado Log Yin", "Hamburguesas Rubens", "Chicken Bake Costco", "Lasaña Armandos"],
+      options: ["Pollo Almendrado Log Yin", "Hamburguesas Rubens", "Chicken Bake Costco", "Lasaña Armandos"], // Corregido formato
       correct: 0
     },
     {
@@ -417,7 +455,7 @@
     q.options.forEach((opt, idx) => {
       const btn = document.createElement('button');
       btn.className = 'btn-option';
-      btn.innerText = opt;
+      btn.innerText = opt; // Se usa innerText directamente para respetar mayúsculas/minúsculas
       btn.onclick = () => selectOption(idx);
       optionsGrid.appendChild(btn);
     });
