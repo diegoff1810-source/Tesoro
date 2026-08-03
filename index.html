@@ -60,11 +60,11 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
 
-    /* Mapa Pergamino Antiguo Cortado / Hoja Vieja e Irregular */
+    /* Mapa Pergamino Antiguo Cortado - Más ancho hacia los lados */
     .map-scroll {
       position: relative;
-      width: 92%;
-      max-width: 680px;
+      width: 95%;
+      max-width: 800px;
       background: #dfc397;
       background-image: 
         radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.25) 0%, rgba(95, 55, 20, 0.55) 90%),
@@ -72,9 +72,9 @@
         url('https://www.transparenttextures.com/patterns/aged-paper.png');
       background-size: cover;
       background-position: center;
-      padding: 55px 42px;
+      padding: 55px 50px;
       text-align: center;
-      /* Silueta súper irregular de hoja de papel vieja y rota/rasgada */
+      /* Silueta irregular de hoja de papel vieja y rota/rasgada */
       clip-path: polygon(
         2% 1.5%, 15% 0.5%, 35% 2%, 55% 0.8%, 78% 2.2%, 94% 0.5%, 98.5% 4.5%,
         97% 18%, 99.5% 33%, 96.5% 48%, 99% 65%, 96% 82%, 98.5% 95.5%, 88% 99%,
@@ -98,7 +98,7 @@
     h1 {
       font-family: 'Pirata One', cursive;
       font-weight: 400;
-      font-size: 3rem;
+      font-size: 3.2rem;
       color: var(--crimson);
       margin: 0 0 2px 0;
       letter-spacing: 2px;
@@ -107,7 +107,7 @@
 
     .subtitle {
       font-style: italic;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       margin-bottom: 22px;
       color: #3b281a;
       font-weight: 600;
@@ -119,7 +119,7 @@
       justify-content: space-between;
       align-items: center;
       background: rgba(56, 33, 16, 0.15);
-      padding: 10px 20px;
+      padding: 12px 25px;
       border-radius: 6px;
       border: 1px solid rgba(88, 51, 23, 0.4);
       margin-bottom: 25px;
@@ -137,8 +137,8 @@
 
     /* Corazones Rústicos Viejos */
     .heart-icon {
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       fill: #8b1212;
       transition: all 0.4s ease;
       filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.4));
@@ -152,7 +152,7 @@
 
     .timer-display {
       font-family: 'Pirata One', cursive;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       color: var(--crimson);
       visibility: hidden;
     }
@@ -165,7 +165,7 @@
     .question-card {
       background: rgba(255, 248, 235, 0.65);
       border: 2px dashed rgba(139, 18, 18, 0.4);
-      padding: 22px 18px;
+      padding: 22px 25px;
       border-radius: 6px;
       margin-bottom: 20px;
       min-height: 100px;
@@ -176,7 +176,7 @@
     }
 
     .question-text {
-      font-size: 1.25rem;
+      font-size: 1.3rem;
       font-weight: 700;
       color: var(--ink);
       line-height: 1.4;
@@ -193,10 +193,10 @@
       background: linear-gradient(180deg, #4a2c16 0%, #2b170a 100%);
       color: #f1e2c3;
       border: 1px solid var(--pirate-gold);
-      padding: 13px 18px;
+      padding: 14px 22px;
       border-radius: 6px;
       font-family: 'Spectral', Georgia, serif;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -223,7 +223,7 @@
     }
 
     #midpoint-banner h3 {
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       margin-top: 0;
       color: var(--pirate-gold);
       font-family: 'Pirata One', cursive;
@@ -232,7 +232,7 @@
     #midpoint-banner p {
       color: #e2c9a1;
       line-height: 1.5;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
     }
 
     /* Pantallas Finales */
@@ -244,20 +244,20 @@
     .reward-scroll {
       background: rgba(255, 250, 240, 0.7);
       border: 2px solid var(--crimson);
-      padding: 20px;
+      padding: 22px;
       border-radius: 8px;
       margin-top: 15px;
     }
 
     .reward-scroll h3 {
       font-family: 'Pirata One', cursive;
-      font-size: 1.8rem;
+      font-size: 2rem;
       margin: 0 0 10px 0;
       color: var(--crimson);
     }
 
     .reward-scroll p {
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       font-weight: 600;
       margin: 0;
     }
@@ -266,9 +266,9 @@
       background: var(--crimson);
       color: white;
       border: none;
-      padding: 12px 25px;
+      padding: 12px 28px;
       font-family: 'Spectral', Georgia, serif;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       font-weight: bold;
       border-radius: 6px;
       cursor: pointer;
@@ -337,8 +337,8 @@
 
     <!-- Pantalla Victoria -->
     <div id="final-screen">
-      <h2 style="font-family: 'Pirata One', cursive; font-size: 2.5rem; color: var(--crimson);">¡Encontraste el tesoro!</h2>
-      <p style="font-size: 1.15rem;">Demostraste conocer cada paso de nuestra historia.</p>
+      <h2 style="font-family: 'Pirata One', cursive; font-size: 2.8rem; color: var(--crimson);">¡Encontraste el tesoro!</h2>
+      <p style="font-size: 1.2rem;">Demostraste conocer cada paso de nuestra historia.</p>
       <div class="reward-scroll">
         <h3>Recompensa</h3>
         <p>Vale por una comida en el Texas Road House.</p>
@@ -347,68 +347,87 @@
 
     <!-- Pantalla Game Over -->
     <div id="gameover-screen">
-      <h2 style="font-family: 'Pirata One', cursive; font-size: 2.5rem; color: var(--crimson);">Has quedado a la deriva...</h2>
-      <p style="font-size: 1.1rem;">Te has quedado sin vidas en el mar tempestuoso.</p>
+      <h2 style="font-family: 'Pirata One', cursive; font-size: 2.8rem; color: var(--crimson);">Has quedado a la deriva...</h2>
+      <p style="font-size: 1.15rem;">Te has quedado sin vidas en el mar tempestuoso.</p>
       <button class="btn-action" onclick="restartGame()">Reintentar la búsqueda</button>
     </div>
   </div>
 
 <script>
-  const questions = [
+  // Banco de preguntas original
+  const rawQuestions = [
     // --- PRIMERA MITAD: Nuestra Historia ---
     {
       q: "1.- ¿Cuál fue mi primer regalo?",
       options: ["Flores", "Soporte de martillo", "Audífonos", "Concierto de MCR"],
-      correct: 2
+      correctText: "Audífonos"
     },
     {
       q: "2.- ¿Cuáles fueron las primeras flores?",
       options: ["Orquídea blanca", "Girasol", "Anturio rojo", "Lirio rosado"],
-      correct: 0
+      correctText: "Orquídea blanca"
     },
     {
       q: "3.- ¿Cuál fue nuestra segunda comida juntos?",
       options: ["Tacos al pastor", "Comida yucateca", "Tortas", "Hamburguesas"],
-      correct: 3
+      correctText: "Hamburguesas"
     },
     {
       q: "4.- ¿Cuál fue el primer juego de mesa que jugamos?",
       options: ["Hister", "Virus", "Futbolito", "Rompecabezas"],
-      correct: 0
+      correctText: "Hister"
     },
     {
       q: "5.- ¿Cuál Dínamo visitamos en nuestro primer hike?",
       options: ["Puerta 1", "Puerta 3", "Puerta 4", "Nuestro primer hike no fue en los Dínamos"],
-      correct: 3
+      correctText: "Nuestro primer hike no fue en los Dínamos"
     },
     // --- SEGUNDA MITAD: Preguntas Personales sobre el Piniweenie ---
     {
       q: "6.- ¿Cuál es mi comida favorita?",
       options: ["Pollo almendrado Log Yin", "Hamburguesas Rubens", "Chicken Bake Costco", "Lasaña Armandos"],
-      correct: 0
+      correctText: "Pollo almendrado Log Yin"
     },
     {
       q: "7.- ¿Cuál es mi videojuego favorito?",
       options: ["Halo Reach", "Assassin's Creed II", "God of War III", "Minecraft"],
-      correct: 3
+      correctText: "Minecraft"
     },
     {
       q: "8.- ¿Cuál es mi árbol favorito?",
       options: ["Ceiba", "Tabachín", "Framboyán amarillo", "Jacaranda"],
-      correct: 1
+      correctText: "Tabachín"
     },
     {
       q: "9.- ¿Cuántos huesos me he roto?",
       options: ["Cero", "1", "Fisura", "2"],
-      correct: 2
+      correctText: "Fisura"
     },
     {
       q: "10.- ¿Cuál es mi máquina favorita del taller?",
       options: ["Dobladora Universal", "Fresadora", "Soldadura MIG", "Torno"],
-      correct: 3
+      correctText: "Torno"
     }
   ];
 
+  // Función para aleatorizar opciones de respuesta manteniendo la respuesta correcta
+  function randomizeQuestionOptions(qList) {
+    return qList.map(item => {
+      let shuffled = [...item.options];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      const correctIndex = shuffled.indexOf(item.correctText);
+      return {
+        q: item.q,
+        options: shuffled,
+        correct: correctIndex
+      };
+    });
+  }
+
+  let questions = randomizeQuestionOptions(rawQuestions);
   let currentIdx = 0;
   let lives = 3;
   let timer = null;
@@ -560,6 +579,8 @@
     lives = 3;
     currentIdx = 0;
     this.midpointPassed = false;
+    // Volver a mezclar las opciones al reiniciar el juego
+    questions = randomizeQuestionOptions(rawQuestions);
     document.getElementById('life-1').classList.remove('lost');
     document.getElementById('life-2').classList.remove('lost');
     document.getElementById('life-3').classList.remove('lost');
