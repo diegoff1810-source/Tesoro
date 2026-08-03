@@ -9,8 +9,8 @@
 
     :root {
       --pirate-gold: #d4af37;
-      --old-paper: #e2c799;
-      --paper-dark: #b89865;
+      --old-paper: #d7c097;
+      --paper-dark: #b59868;
       --leather: #382110;
       --crimson: #8b1212;
       --ink: #20140b;
@@ -19,7 +19,7 @@
     * {
       box-sizing: border-box;
       user-select: none;
-      text-transform: none !important; /* Desactiva el forzado a mayúsculas */
+      text-transform: none !important; /* Desactiva completamente cualquier conversión automática a mayúsculas */
     }
 
     body {
@@ -32,8 +32,8 @@
       justify-content: center;
       align-items: center;
       /* Fondo de mar pirata realista */
-      background: linear-gradient(rgba(10, 18, 26, 0.7), rgba(5, 10, 15, 0.85)),
-                  url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?q=80&w=1600&auto=format&fit=crop');
+      background: linear-gradient(rgba(10, 18, 26, 0.65), rgba(5, 10, 15, 0.85)),
+                  url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop');
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
@@ -58,22 +58,22 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
 
-    /* Pergamino Principal estilo Mapa Antiguo Realista */
+    /* Pergamino Principal estilo Mapa Antiguo Pirata */
     .map-scroll {
       position: relative;
       width: 92%;
       max-width: 680px;
       background: #dfc397;
-      /* Textura de mapa pirata avegentado */
+      /* Fondo de textura de mapa del tesoro antiguo en pergamino */
       background-image: 
-        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.15) 0%, rgba(139, 90, 43, 0.35) 90%),
-        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 3px),
-        url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1000&auto=format&fit=crop');
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2) 0%, rgba(110, 68, 28, 0.45) 90%),
+        repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 2px, transparent 2px, transparent 4px),
+        url('https://www.transparenttextures.com/patterns/aged-paper.png');
       background-size: cover;
       background-position: center;
       padding: 50px 40px;
       text-align: center;
-      /* Recorte irregular realista de borde arrugado y quemado */
+      /* Recorte irregular realista de borde arrugado y desgastado */
       clip-path: polygon(
         0% 3%, 2% 0%, 98% 1%, 100% 4%, 
         97% 25%, 99% 50%, 96% 75%, 100% 97%, 97% 100%, 
@@ -88,15 +88,15 @@
       content: "";
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(43, 26, 14, 0.6) 100%);
-      border: 3px solid rgba(82, 48, 22, 0.5);
+      background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(43, 26, 14, 0.55) 100%);
+      border: 3px solid rgba(82, 48, 22, 0.4);
       pointer-events: none;
     }
 
-    /* Título más grueso */
+    /* Título grueso "Búsqueda del Tesoro" */
     h1 {
       font-family: 'Metamorphous', cursive;
-      font-weight: 900; /* Título más grueso */
+      font-weight: 900;
       font-size: 2.2rem;
       color: var(--crimson);
       margin: 0 0 6px 0;
@@ -160,9 +160,9 @@
       visibility: visible;
     }
 
-    /* Tarjeta de Pregunta con papel suave vintage */
+    /* Tarjeta de Pregunta en pergamino */
     .question-card {
-      background: rgba(255, 248, 235, 0.5);
+      background: rgba(255, 248, 235, 0.55);
       border: 2px dashed rgba(139, 18, 18, 0.4);
       padding: 22px 18px;
       border-radius: 6px;
@@ -339,13 +339,13 @@
   </div>
 
 <script>
-  // Banco de preguntas configurado en Mayúsculas y Minúsculas
+  // Banco de preguntas configurado en Mayúsculas y Minúsculas de forma exacta
   const questions = [
     // --- PRIMERA MITAD: Nuestra Historia ---
     {
       q: "1.- ¿Cuál fue mi primer regalo?",
       options: ["Flores", "Soporte de martillo", "Audífonos", "Concierto de MCR"],
-      correct: 2 // Audífonos es la respuesta correcta
+      correct: 2 // Respuesta correcta: Audífonos
     },
     {
       q: "2.- ¿Cuáles fueron las primeras flores?",
@@ -359,7 +359,7 @@
     },
     {
       q: "4.- ¿Con qué canción me viste llorar por primera vez?",
-      options: ["We Are All Alone", "Eyes Without a Face"],
+      options: ["We are all alone", "Eyes without a face"],
       correct: 1
     },
     {
